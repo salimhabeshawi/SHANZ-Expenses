@@ -16,14 +16,77 @@ from PyQt5.QtWidgets import (
     QTableWidgetItem
 )
 
+
 class ExpenseApp(QWidget):
     def __init__(self):
         super().__init__()
         # Main App Objects and Settings
         self.resize(1100, 1000)
         self.setWindowTitle("SHANZ Expenses")
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #23272f;
+                color: #f5f6fa;
+                font-family: 'Segoe UI', 'Arial', sans-serif;
+                font-size: 16px;
+            }
+            QLabel {
+                color: #f5f6fa;
+                font-weight: 500;
+            }
+            QLineEdit, QComboBox, QDateEdit {
+                background: #2d323b;
+                color: #f5f6fa;
+                border: 1px solid #444a57;
+                border-radius: 6px;
+                padding: 6px 10px;
+                margin: 2px 0;
+            }
+            QLineEdit:focus, QComboBox:focus, QDateEdit:focus {
+                border: 1.5px solid #00b894;
+                background: #23272f;
+            }
+            QPushButton {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #00b894, stop:1 #0984e3);
+                color: #fff;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 24px;
+                font-weight: 600;
+                margin: 6px 8px 6px 0;
+                transition: background 0.2s;
+            }
+            QPushButton:hover {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #0984e3, stop:1 #00b894);
+            }
+            QTableWidget {
+                background: #23272f;
+                color: #f5f6fa;
+                border: 1px solid #444a57;
+                border-radius: 8px;
+                gridline-color: #444a57;
+                font-size: 15px;
+            }
+            QHeaderView::section {
+                background: #2d323b;
+                color: #00b894;
+                font-weight: bold;
+                border: none;
+                border-bottom: 2px solid #00b894;
+                padding: 8px;
+            }
+            QTableWidget QTableCornerButton::section {
+                background: #2d323b;
+                border: none;
+            }
+            QTableWidget::item:selected {
+                background: #00b894;
+                color: #23272f;
+            }
+        """)
 
         self.date_box = QDateEdit()
+        self.date_box.setDate(QDate.currentDate())
         self.dropdown = QComboBox()
         self.amount = QLineEdit()
         self.description = QLineEdit()
@@ -34,7 +97,7 @@ class ExpenseApp(QWidget):
         self.delete_button.clicked.connect(self.delete_expenses)
 
         self.table = QTableWidget()
-        self.table.setColumnCount(5) # Id, Date, Category, Amount, Description
+        self.table.setColumnCount(5)  # Id, Date, Category, Amount, Description
         header_names = ["Id", "Date", "Category", "Amount", "Description"]
         self.table.setHorizontalHeaderLabels(header_names)
 
@@ -124,12 +187,14 @@ class ExpenseApp(QWidget):
     def delete_expenses(self):
         selected_row = self.table.currentRow()
         if selected_row == -1:
-            QMessageBox.warning(self, "No Expenses Chosen", "Please choose an expense to delete!")
+            QMessageBox.warning(self, "No Expenses Chosen",
+                                "Please choose an expense to delete!")
             return
 
         expense_id = int(self.table.item(selected_row, 0).text())
 
-        confirm = QMessageBox.question("Are you sure?", "Delete Expense?", QMessageBox.Yes | QMessageBox.No)
+        confirm = QMessageBox.question(
+            self, "Are you sure?", "Delete Expense?", QMessageBox.Yes | QMessageBox.No)
 
         if confirm == QMessageBox.No:
             return
@@ -140,6 +205,7 @@ class ExpenseApp(QWidget):
         query.exec_()
 
         self.load_table()
+
 
 # Create Databases
 database = QSqlDatabase.addDatabase("QSQLITE")
@@ -166,4 +232,3 @@ if __name__ == '__main__':
     main = ExpenseApp()
     main.show()
     app.exec_()
-
