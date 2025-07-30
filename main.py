@@ -1,6 +1,3 @@
-import sys
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery
-from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import (
     QApplication,
     QWidget,
@@ -15,13 +12,22 @@ from PyQt5.QtWidgets import (
     QMessageBox,
     QTableWidgetItem
 )
+from PyQt5.QtCore import QDate
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery
+import os
+import sys
+
+# Fix for high-DPI scaling
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+os.environ["QT_SCALE_FACTOR_ROUNDING_POLICY"] = "PassThrough"
+os.environ["QT_ENABLE_HIDPI_SCALING"] = "1"
 
 
 class ExpenseApp(QWidget):
     def __init__(self):
         super().__init__()
         # Main App Objects and Settings
-        self.resize(1100, 1000)
+        self.resize(550, 500)
         self.setWindowTitle("SHANZ Expenses")
         self.setStyleSheet("""
             QWidget {
@@ -115,6 +121,9 @@ class ExpenseApp(QWidget):
         self.row1 = QHBoxLayout()
         self.row2 = QHBoxLayout()
         self.row3 = QHBoxLayout()
+        self.sum_label = QLabel()
+        self.sum_label.setStyleSheet(
+            "font-size:18px;font-weight:bold;color:#00b894;margin:8px 0 0 0;")
 
         self.row1.addWidget(QLabel("Date:"))
         self.row1.addWidget(self.date_box)
@@ -134,6 +143,7 @@ class ExpenseApp(QWidget):
         self.master_layout.addLayout(self.row3)
 
         self.master_layout.addWidget(self.table)
+        self.master_layout.addWidget(self.sum_label)
 
         self.setLayout(self.master_layout)
 
@@ -144,6 +154,7 @@ class ExpenseApp(QWidget):
 
         query = QSqlQuery("SELECT * FROM expenses")
         row = 0
+        total_amount = 0.0
         while query.next():
             expense_id = query.value(0)
             date = query.value(1)
@@ -151,14 +162,20 @@ class ExpenseApp(QWidget):
             amount = query.value(3)
             description = query.value(4)
 
-            # Add the values in the database into the visual table
             self.table.insertRow(row)
             self.table.setItem(row, 0, QTableWidgetItem(str(expense_id)))
             self.table.setItem(row, 1, QTableWidgetItem(date))
             self.table.setItem(row, 2, QTableWidgetItem(category))
             self.table.setItem(row, 3, QTableWidgetItem(str(amount)))
             self.table.setItem(row, 4, QTableWidgetItem(description))
+            try:
+                total_amount += float(amount)
+            except Exception:
+                pass
             row += 1
+
+        self.sum_label.setText(
+            f"Total Expenses: <span style='color:#fff;'>{total_amount:.2f}</span>")
 
     def add_expenses(self):
         date = self.date_box.date().toString("yyyy-MM-dd")
