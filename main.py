@@ -221,6 +221,13 @@ class ExpenseApp(QWidget):
         query.addBindValue(expense_id)
         query.exec_()
 
+        # Check if table is empty and reset AUTOINCREMENT if so
+        check_query = QSqlQuery("SELECT COUNT(*) FROM expenses")
+        if check_query.next() and check_query.value(0) == 0:
+            reset_query = QSqlQuery()
+            reset_query.exec_(
+                "DELETE FROM sqlite_sequence WHERE name='expenses'")
+
         self.load_table()
 
 
