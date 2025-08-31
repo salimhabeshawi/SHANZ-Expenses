@@ -1,2 +1,2 @@
-![Project Screenshot](screenshot2.png)
+![Project Screenshot](Screenshot2.png)
 ![Project Screenshot](screenshot.png)
