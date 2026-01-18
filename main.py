@@ -53,17 +53,18 @@ class ExpenseApp(QWidget):
                 background: #23272f;
             }
             QPushButton {
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #00b894, stop:1 #0984e3);
+                background:#00b894;
                 color: #fff;
-                border: none;
+                border: 1px solid #444a57;
                 border-radius: 6px;
                 padding: 8px 24px;
                 font-weight: 600;
                 margin: 6px 8px 6px 0;
                 transition: background 0.2s;
+                max-width: 200px;
             }
             QPushButton:hover {
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #0984e3, stop:1 #00b894);
+                transform: translateY(-2px);
             }
             QTableWidget {
                 background: #23272f;
@@ -103,8 +104,8 @@ class ExpenseApp(QWidget):
         self.delete_button.clicked.connect(self.delete_expenses)
 
         self.table = QTableWidget()
-        self.table.setColumnCount(5)  # Id, Date, Category, Amount, Description
-        header_names = ["Id", "Date", "Category", "Amount", "Description"]
+        self.table.setColumnCount(4)  #Date, Category, Amount, Description
+        header_names = ["Date", "Category", "Amount", "Description"]
         self.table.setHorizontalHeaderLabels(header_names)
 
         # Design App with Layouts
@@ -115,7 +116,8 @@ class ExpenseApp(QWidget):
             "Shopping",
             "entertainment",
             "Bills",
-            "Other"])
+            "Other"
+        ])
 
         self.master_layout = QVBoxLayout()
         self.row1 = QHBoxLayout()
@@ -156,18 +158,16 @@ class ExpenseApp(QWidget):
         row = 0
         total_amount = 0.0
         while query.next():
-            expense_id = query.value(0)
             date = query.value(1)
             category = query.value(2)
             amount = query.value(3)
             description = query.value(4)
 
             self.table.insertRow(row)
-            self.table.setItem(row, 0, QTableWidgetItem(str(expense_id)))
-            self.table.setItem(row, 1, QTableWidgetItem(date))
-            self.table.setItem(row, 2, QTableWidgetItem(category))
-            self.table.setItem(row, 3, QTableWidgetItem(str(amount)))
-            self.table.setItem(row, 4, QTableWidgetItem(description))
+            self.table.setItem(row, 0, QTableWidgetItem(date))
+            self.table.setItem(row, 1, QTableWidgetItem(category))
+            self.table.setItem(row, 2, QTableWidgetItem(str(amount)))
+            self.table.setItem(row, 3, QTableWidgetItem(description))
             try:
                 total_amount += float(amount)
             except Exception:
