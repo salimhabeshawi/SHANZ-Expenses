@@ -1,0 +1,196 @@
+/* Base Styles */
+QWidget {
+  background-color: #f4ebd9;
+  font-family: "Outfit", "Segoe UI", sans-serif;
+  color: #2d2a26;
+}
+
+/* Sidebar Styling */
+#sidebar {
+  background-color: #f4ebd9;
+  border-right: 1px solid #2d2a26;
+}
+
+#logo {
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+#sidebarbtn_icon {
+  font-size: 20px;
+  color: #2d2a26;
+  background: transparent;
+}
+
+#sidebarbtn_text {
+  font-size: 10px;
+  font-weight: bold;
+  color: #2d2a26;
+  background: transparent;
+}
+
+/* Sidebar Button Pseudo-classes */
+QPushButton.SidebarButton {
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  margin: 5px;
+}
+
+QPushButton.SidebarButton:hover {
+  background: rgba(45, 42, 38, 0.05);
+}
+
+QPushButton.SidebarButton:checked {
+  background: rgba(45, 42, 38, 0.1);
+}
+
+/* Container & Panes */
+#main_container {
+  background-color: #f4ebd9;
+  border: 1px solid #2d2a26;
+  border-radius: 0px;
+}
+
+#left_pane {
+  border-right: 1px solid #2d2a26;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+}
+
+#right_pane {
+  border: none;
+  background: #f4ebd9;
+}
+
+/* Typography */
+#home_title {
+  font-size: 24px;
+  font-weight: bold;
+  border: none;
+  margin-top: 20px;
+}
+
+#home_desc {
+  font-size: 14px;
+  color: #666;
+  border: none;
+  margin-bottom: 20px;
+}
+
+#form_title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#form_desc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Quick Action Buttons */
+QPushButton.SocialBtn {
+  background: white;
+  border: 1px solid #2d2a26;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 14px;
+  text-align: left;
+}
+
+QPushButton.SocialBtn:hover {
+  background: #f9f5f0;
+}
+
+/* Form Inputs */
+QLineEdit,
+QComboBox,
+QDateEdit {
+  background: white;
+  border: 1px solid #2d2a26;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 14px;
+}
+
+QLineEdit:focus,
+QComboBox:focus,
+QDateEdit:focus {
+  border: 2px solid #ff6b35;
+}
+
+/* Primary Action Button */
+#continue_btn {
+  background-color: #ff6b35;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+#continue_btn:hover {
+  background-color: #e55a2b;
+}
+
+/* Table Styling */
+QTableWidget {
+  background-color: white;
+  border: 1px solid #2d2a26;
+  gridline-color: #eee;
+  border-radius: 4px;
+}
+
+QHeaderView::section {
+  background-color: #f9f5f0;
+  padding: 10px;
+  font-weight: bold;
+  border: none;
+  border-bottom: 1px solid #2d2a26;
+}
+
+/* Utility */
+#sum_label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+#delete_btn {
+  background-color: #2d2a26;
+  color: white;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+#delete_btn:hover {
+  background-color: #444;
+}
+
+#illustration {
+  border: none;
+}
+
+#sep_text {
+  font-size: 12px;
+  color: #666;
+}
+
+#dot_active {
+  font-size: 12px;
+  color: #2d2a26;
+  border: none;
+}
+
+#dot_inactive {
+  font-size: 12px;
+  color: #2d2a26;
+  border: none;
+  opacity: 0.5; /* Note: opacity might not work directly in QSS on some widgets, but colors do */
+}
